@@ -1,0 +1,127 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+*.sln.iml
+*.swp
+*.swo
+*~
+.DS_Store
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# MAUI
+bin/
+obj/
+.vs/
+packages/
+.mauirc
+.maui/
+
+# Build artifacts
+*.apk
+*.aab
+*.appx
+*.appxupload
+*.ipa
+*.ipsw
+*.xcarchive
+
+# iOS/Mac Catalyst
+.Trash/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/xcshareddata/
+*.playground/timeline.xctimeline
+
+# Android
+local.properties
+*.jks
+*.keystore
+gradlew
+gradlew.bat
+gradle/
+.gradle/
+
+# Rider
+.idea/
+*.sln.iml
+
+# User-specific files
+launchSettings.json
+appsettings.local.json
+
+# Temporary files
+*.tmp
+*.temp
+*~
+.~*
+
+# OS files
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Visual Studio specific
+.vscode/
+.vs/
+*.code-workspace
+
+# Test Results
+TestResults/
+coverage/
+.coverage
+
+# npm
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE specific files
+*.swp
+*.swo
+*~
+.vimrc
+
+# Backup files
+*.bak
+*.backup
