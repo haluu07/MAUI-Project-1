@@ -388,34 +388,153 @@ namespace Maui
         }
 
         // Smart Controls event handlers (same as Compact)
-        private void OnSmartRGBLightsSwitchToggled(object sender, ToggledEventArgs e)
+        // Air Conditioner
+        private async void OnSmartAirConditionerSwitchToggled(object sender, ToggledEventArgs e)
+        {
+            var iconBorder = this.FindByName<Border>("SmartAirConditionerIconBorder");
+            var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartAirConditionerIconPath");
+            var expandedSection = this.FindByName<Border>("SmartAirConditionerExpandedSection");
+            
+            UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#512BD4"), "#E1BEE7", "#CE93D8");
+            if (expandedSection != null)
+            {
+                await ToggleExpandedSection(expandedSection, e.Value);
+            }
+        }
+
+        private void OnSmartAirConditionerTempChanged(object sender, ValueChangedEventArgs e)
+        {
+            var tempLabel = this.FindByName<Label>("SmartAirConditionerTempValueLabel");
+            if (tempLabel != null)
+            {
+                tempLabel.Text = $"{(int)e.NewValue}°C";
+            }
+        }
+
+        // Smart TV (no expanded section, just icon color change)
+        private void OnSmartControlsSmartTVSwitchToggled(object sender, ToggledEventArgs e)
+        {
+            var iconBorder = this.FindByName<Border>("SmartControlsSmartTVIconBorder");
+            var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartControlsSmartTVIconPath");
+            UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#00BCD4"), "#B2EBF2", "#80DEEA");
+        }
+
+        // Ceiling Fan
+        private async void OnSmartCeilingFanSwitchToggled(object sender, ToggledEventArgs e)
+        {
+            var iconBorder = this.FindByName<Border>("SmartCeilingFanIconBorder");
+            var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartCeilingFanIconPath");
+            var expandedSection = this.FindByName<Border>("SmartCeilingFanExpandedSection");
+            
+            UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#2196F3"), "#E3F2FD", "#BBDEFB");
+            if (expandedSection != null)
+            {
+                await ToggleExpandedSection(expandedSection, e.Value);
+            }
+        }
+
+        private void OnSmartCeilingFanSpeedChanged(object sender, ValueChangedEventArgs e)
+        {
+            var speedLabel = this.FindByName<Label>("SmartCeilingFanSpeedValueLabel");
+            if (speedLabel != null)
+            {
+                speedLabel.Text = ((int)e.NewValue).ToString();
+            }
+        }
+
+        // RGB Lights
+        private async void OnSmartRGBLightsSwitchToggled(object sender, ToggledEventArgs e)
         {
             var iconBorder = this.FindByName<Border>("SmartRGBLightsIconBorder");
             var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartRGBLightsIconPath");
+            var expandedSection = this.FindByName<Border>("SmartRGBLightsExpandedSection");
+            
             UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#FF9800"), "#FFE0B2", "#FFCC80");
+            if (expandedSection != null)
+            {
+                await ToggleExpandedSection(expandedSection, e.Value);
+            }
         }
 
-        private void OnSmartTableFanSwitchToggled(object sender, ToggledEventArgs e)
+        private void OnSmartRGBLightsBrightnessChanged(object sender, ValueChangedEventArgs e)
+        {
+            var brightnessLabel = this.FindByName<Label>("SmartRGBLightsBrightnessValueLabel");
+            if (brightnessLabel != null)
+            {
+                brightnessLabel.Text = $"{(int)e.NewValue}%";
+            }
+        }
+
+        // Table Fan
+        private async void OnSmartTableFanSwitchToggled(object sender, ToggledEventArgs e)
         {
             var iconBorder = this.FindByName<Border>("SmartTableFanIconBorder");
             var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartTableFanIconPath");
+            var expandedSection = this.FindByName<Border>("SmartTableFanExpandedSection");
+            
             UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#2196F3"), "#E3F2FD", "#BBDEFB");
+            if (expandedSection != null)
+            {
+                await ToggleExpandedSection(expandedSection, e.Value);
+            }
         }
 
-        private void OnSmartPendantLightsSwitchToggled(object sender, ToggledEventArgs e)
+        private void OnSmartTableFanSpeedChanged(object sender, ValueChangedEventArgs e)
+        {
+            var speedLabel = this.FindByName<Label>("SmartTableFanSpeedValueLabel");
+            if (speedLabel != null)
+            {
+                speedLabel.Text = ((int)e.NewValue).ToString();
+            }
+        }
+
+        // Pendant Lights
+        private async void OnSmartPendantLightsSwitchToggled(object sender, ToggledEventArgs e)
         {
             var iconBorder = this.FindByName<Border>("SmartPendantLightsIconBorder");
             var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartPendantLightsIconPath");
+            var expandedSection = this.FindByName<Border>("SmartPendantLightsExpandedSection");
+            
             UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#FF9800"), "#FFE0B2", "#FFCC80");
+            if (expandedSection != null)
+            {
+                await ToggleExpandedSection(expandedSection, e.Value);
+            }
         }
 
-        private void OnSmartSplitACSwitchToggled(object sender, ToggledEventArgs e)
+        private void OnSmartPendantLightsBrightnessChanged(object sender, ValueChangedEventArgs e)
+        {
+            var brightnessLabel = this.FindByName<Label>("SmartPendantLightsBrightnessValueLabel");
+            if (brightnessLabel != null)
+            {
+                brightnessLabel.Text = $"{(int)e.NewValue}%";
+            }
+        }
+
+        // Split AC
+        private async void OnSmartSplitACSwitchToggled(object sender, ToggledEventArgs e)
         {
             var iconBorder = this.FindByName<Border>("SmartSplitACIconBorder");
             var iconPath = this.FindByName<Microsoft.Maui.Controls.Shapes.Path>("SmartSplitACIconPath");
+            var expandedSection = this.FindByName<Border>("SmartSplitACExpandedSection");
+            
             UpdateIconColor(iconBorder, iconPath, e.Value, Color.FromArgb("#512BD4"), "#E1BEE7", "#CE93D8");
+            if (expandedSection != null)
+            {
+                await ToggleExpandedSection(expandedSection, e.Value);
+            }
         }
 
+        private void OnSmartSplitACTempChanged(object sender, ValueChangedEventArgs e)
+        {
+            var tempLabel = this.FindByName<Label>("SmartSplitACTempValueLabel");
+            if (tempLabel != null)
+            {
+                tempLabel.Text = $"{(int)e.NewValue}°C";
+            }
+        }
+
+        // TV (no expanded section, just icon color change)
         private void OnSmartTVSwitchToggled2(object sender, ToggledEventArgs e)
         {
             var iconBorder = this.FindByName<Border>("SmartTVIconBorder2");
