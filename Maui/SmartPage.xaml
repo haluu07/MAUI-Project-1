@@ -199,6 +199,276 @@
             <!-- Device Control Cards -->
             <VerticalStackLayout Spacing="15">
                 
+                <!-- Ceiling Fan -->
+                <Border StrokeThickness="0" Padding="20,15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <VerticalStackLayout Spacing="15">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border Grid.Column="0"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#4FC3F7" Offset="0"/>
+                                        <GradientStop Color="#29B6F6" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid>
+                                    <Path Data="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.35 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"
+                                          Fill="Transparent"
+                                          Stroke="White"
+                                          StrokeThickness="2"
+                                          WidthRequest="24"
+                                          HeightRequest="24"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Center"/>
+                                    <Ellipse WidthRequest="8"
+                                             HeightRequest="8"
+                                             Fill="#4CAF50"
+                                             HorizontalOptions="End"
+                                             VerticalOptions="Start"
+                                             Margin="0,2,2,0"
+                                             IsVisible="{Binding CeilingFan.IsOn}"/>
+                                </Grid>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="Ceiling Fan"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Living Room"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    IsToggled="{Binding CeilingFan.IsOn}"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                        
+                        <!-- Speed Level Control (shown when ON) -->
+                        <VerticalStackLayout IsVisible="{Binding CeilingFan.IsOn}"
+                                             Spacing="8">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Path Data="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"
+                                          Fill="#4FC3F7"
+                                          WidthRequest="18"
+                                          HeightRequest="18"
+                                          VerticalOptions="Center"/>
+                                    <Label Text="Speed Level"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Label Grid.Column="2"
+                                       Text="{Binding CeilingFan.SpeedLevelText}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#4FC3F7"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                            <Slider Minimum="1"
+                                    Maximum="5"
+                                    Value="{Binding CeilingFan.SpeedLevel}"
+                                    MinimumTrackColor="#4FC3F7"
+                                    MaximumTrackColor="#E0E0E0"
+                                    ThumbColor="White"/>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Grid.Column="0"
+                                       Text="Low"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                                       HorizontalOptions="Start"/>
+                                <Label Grid.Column="1"
+                                       Text="High"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                                       HorizontalOptions="End"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Air Conditioner -->
+                <Border StrokeThickness="0" Padding="20,15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <VerticalStackLayout Spacing="15">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border Grid.Column="0"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#9C27B0" Offset="0"/>
+                                        <GradientStop Color="#7B1FA2" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Grid>
+                                    <Path Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.37.49-.1 1.1.5 1.1h14.6c.6 0 .87-.61.5-1.1z"
+                                          Fill="Transparent"
+                                          Stroke="White"
+                                          StrokeThickness="2"
+                                          WidthRequest="24"
+                                          HeightRequest="24"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Center"/>
+                                    <Ellipse WidthRequest="8"
+                                             HeightRequest="8"
+                                             Fill="#4CAF50"
+                                             HorizontalOptions="End"
+                                             VerticalOptions="Start"
+                                             Margin="0,2,2,0"
+                                             IsVisible="{Binding AirConditioner.IsOn}"/>
+                                </Grid>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="Air Conditioner"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Bedroom"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    IsToggled="{Binding AirConditioner.IsOn}"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"/>
+                        </Grid>
+                        
+                        <!-- Temperature Control (shown when ON) -->
+                        <VerticalStackLayout IsVisible="{Binding AirConditioner.IsOn}"
+                                             Spacing="8">
+                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                <HorizontalStackLayout Grid.Column="0" Spacing="8">
+                                    <Path Data="M15 13V5c0-1.66-1.34-3-3-3S9 3.34 9 5v8c-1.21.91-2 2.37-2 4 0 2.76 2.24 5 5 5s5-2.24 5-5c0-1.63-.79-3.09-2-4zm-4-8c0-.55.45-1 1-1s1 .45 1 1h-1v1h-1v1h2v5c0 .55-.45 1-1 1s-1-.45-1-1v-5h-1V5z"
+                                          Fill="#64B5F6"
+                                          WidthRequest="18"
+                                          HeightRequest="18"
+                                          VerticalOptions="Center"/>
+                                    <Label Text="Temperature"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                           VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Label Grid.Column="2"
+                                       Text="{Binding AirConditioner.Temperature, StringFormat='{0:F0}°C'}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#64B5F6"
+                                       VerticalOptions="Center"/>
+                            </Grid>
+                            <Slider Minimum="16"
+                                    Maximum="30"
+                                    Value="{Binding AirConditioner.Temperature}"
+                                    MinimumTrackColor="#9C27B0"
+                                    MaximumTrackColor="#E0E0E0"
+                                    ThumbColor="White"/>
+                            <Grid ColumnDefinitions="*,*">
+                                <Label Grid.Column="0"
+                                       Text="16°C"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                                       HorizontalOptions="Start"/>
+                                <Label Grid.Column="1"
+                                       Text="30°C"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                                       HorizontalOptions="End"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Smart TV -->
+                <Border StrokeThickness="0" Padding="20,15">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                        <Border Grid.Column="0"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#26A69A" Offset="0"/>
+                                    <GradientStop Color="#00897B" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Grid>
+                                <Path Data="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"
+                                      Fill="Transparent"
+                                      Stroke="White"
+                                      StrokeThickness="2"
+                                      WidthRequest="24"
+                                      HeightRequest="24"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                                <Ellipse WidthRequest="8"
+                                         HeightRequest="8"
+                                         Fill="#4CAF50"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="Start"
+                                         Margin="0,2,2,0"
+                                         IsVisible="{Binding SmartTV.IsOn}"/>
+                            </Grid>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                            <Label Text="Smart TV"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                            <Label Text="Living Room"
+                                   FontSize="14"
+                                   TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2"
+                                IsToggled="{Binding SmartTV.IsOn}"
+                                OnColor="#512BD4"
+                                ThumbColor="White"
+                                VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+                
                 <!-- RGB Lights -->
                 <Border StrokeThickness="0" Padding="20,15">
                     <Border.StrokeShape>
@@ -355,8 +625,10 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                                 <Grid>
-                                    <Path Data="M12.01 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3h-13c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12.01 6m0-2C9.12 4 6.6 5.64 5.35 8.04 2.35 8.36.01 10.91.01 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96C18.68 6.59 15.65 4 12.01 4z"
-                                      Fill="White"
+                                    <Path Data="M19.36 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.35 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"
+                                      Fill="Transparent"
+                                      Stroke="White"
+                                      StrokeThickness="2"
                                       WidthRequest="24"
                                       HeightRequest="24"
                                       HorizontalOptions="Center"
