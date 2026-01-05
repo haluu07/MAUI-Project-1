@@ -1,4 +1,5 @@
 Smart Home
 
-Nhóm 2 ngừoi : Nguyễn Thạc Thịnh - Lưu Thế Hà
+Nhóm 2 người : Nguyễn Thạc Thịnh - Lưu Thế Hà
+
 
