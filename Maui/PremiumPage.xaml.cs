@@ -2,6 +2,9 @@ namespace Maui
 {
     public partial class PremiumPage : ContentPage
     {
+        public DeviceViewModel CeilingFan { get; set; }
+        public DeviceViewModel AirConditioner { get; set; }
+        public DeviceViewModel SmartTV { get; set; }
         public DeviceViewModel RgbLights { get; set; }
         public DeviceViewModel TableFan { get; set; }
         public DeviceViewModel PendantLights { get; set; }
@@ -13,6 +16,9 @@ namespace Maui
             InitializeComponent();
             
             // Initialize devices
+            CeilingFan = new DeviceViewModel { Name = "Ceiling Fan", Location = "Living Room", DeviceType = "fan", SpeedLevel = 2 };
+            AirConditioner = new DeviceViewModel { Name = "Air Conditioner", Location = "Bedroom", DeviceType = "ac", Temperature = 22 };
+            SmartTV = new DeviceViewModel { Name = "Smart TV", Location = "Living Room", DeviceType = "tv" };
             RgbLights = new DeviceViewModel 
             { 
                 Name = "RGB Lights", 
