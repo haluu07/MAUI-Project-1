@@ -5,6 +5,9 @@
         public AppShell()
         {
             InitializeComponent();
+            
+            // Register route for DeviceDetailPage
+            Routing.RegisterRoute(nameof(DeviceDetailPage), typeof(DeviceDetailPage));
         }
     }
 }

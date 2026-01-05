@@ -177,6 +177,9 @@
                             BackgroundColor="White"
                             StrokeThickness="0"
                             Padding="20,12">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCompactTabTapped"/>
+                        </Border.GestureRecognizers>
                         <Border.StrokeShape>
                             <RoundRectangle CornerRadius="20"/>
                         </Border.StrokeShape>
@@ -186,7 +189,8 @@
                                     Radius="4"
                                     Opacity="0.08"/>
                         </Border.Shadow>
-                        <Label Text="Compact"
+                        <Label x:Name="CompactTabLabel"
+                               Text="Compact"
                                FontSize="14"
                                FontAttributes="Bold"
                                TextColor="{StaticResource Primary}"
@@ -194,13 +198,20 @@
                     </Border>
                     
                     <!-- Smart Tab (Unselected) -->
-                    <Label Grid.Column="1"
-                           Text="Smart"
-                           FontSize="14"
-                           TextColor="{AppThemeBinding Light=#333333, Dark=#CCCCCC}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           Padding="20,12"/>
+                    <Border Grid.Column="1"
+                            x:Name="SmartTab"
+                            BackgroundColor="Transparent"
+                            StrokeThickness="0"
+                            Padding="20,12">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnSmartTabTapped"/>
+                        </Border.GestureRecognizers>
+                        <Label x:Name="SmartTabLabel"
+                               Text="Smart"
+                               FontSize="14"
+                               TextColor="{AppThemeBinding Light=#333333, Dark=#CCCCCC}"
+                               HorizontalOptions="Center"/>
+                    </Border>
                     
                     <!-- Premium Tab (Unselected) -->
                     <Label Grid.Column="2"
@@ -213,22 +224,26 @@
                 </Grid>
             </Border>
 
-            <!-- Section Title -->
-            <VerticalStackLayout Spacing="5" Margin="0,10">
-                <Label Text="Compact Control"
-                       FontSize="24"
-                       FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
-                <Label Text="Space-efficient cards for quick access"
-                       FontSize="14"
-                       TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"/>
-            </VerticalStackLayout>
+            <!-- Compact Control Section -->
+            <VerticalStackLayout x:Name="CompactControlSection" Spacing="0">
+                <!-- Section Title -->
+                <VerticalStackLayout Spacing="5" Margin="0,10">
+                    <Label Text="Compact Control"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                    <Label Text="Space-efficient cards for quick access"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"/>
+                </VerticalStackLayout>
 
-            <!-- Device Control Cards -->
-            <VerticalStackLayout Spacing="15">
+                <!-- Device Control Cards -->
+                <VerticalStackLayout Spacing="15">
                 
                 <!-- Ceiling Fan -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="CeilingFanCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -238,17 +253,29 @@
                             <GradientStop Color="#E8E8E8" Offset="1"/>
                         </LinearGradientBrush>
                     </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,2"
+                                Radius="10"
+                                Opacity="0.08"/>
+                    </Border.Shadow>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="CeilingFanIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M12.01 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3h-13c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12.01 6m0-2C9.12 4 6.6 5.64 5.35 8.04 2.35 8.36.01 10.91.01 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96C18.68 6.59 15.65 4 12.01 4z"
-                                  Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="CeilingFanIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="CeilingFanIconPath"
+                                  Data="M12.01 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3h-13c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12.01 6m0-2C9.12 4 6.6 5.64 5.35 8.04 2.35 8.36.01 10.91.01 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96C18.68 6.59 15.65 4 12.01 4z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -264,15 +291,97 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="CeilingFanSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnCeilingFanSwitchToggled"/>
                     </Grid>
                 </Border>
 
+                <!-- Ceiling Fan Expanded Section (Speed Control) -->
+                <Border x:Name="CeilingFanExpandedSection"
+                        IsVisible="False"
+                        StrokeThickness="0"
+                        Padding="20,20"
+                        Margin="0,8,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#FAFAFA" Offset="0"/>
+                            <GradientStop Color="#F0F0F0" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,4"
+                                Radius="12"
+                                Opacity="0.12"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        
+                        <!-- Separator Line -->
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#E0E0E0, Dark=#404040}"
+                                 Margin="0,0,0,10"/>
+                        
+                        <!-- Speed Control Section -->
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M4 9h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0h2v2h-2zm-2-4h2v2h-2zm4 0h2v2h-2z"
+                                      Fill="{AppThemeBinding Light=#333333, Dark=#CCCCCC}"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Speed"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            
+                            <Label Grid.Column="2"
+                                   x:Name="CeilingFanSpeedValueLabel"
+                                   Text="2"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#2196F3"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                        
+                        <!-- Speed Slider -->
+                        <Slider x:Name="CeilingFanSpeedSlider"
+                                Minimum="1"
+                                Maximum="5"
+                                Value="2"
+                                MinimumTrackColor="#2196F3"
+                                MaximumTrackColor="{AppThemeBinding Light=#212121, Dark=#404040}"
+                                ThumbColor="White"
+                                ValueChanged="OnCeilingFanSpeedChanged"
+                                HeightRequest="40"/>
+                        
+                        <!-- Range Labels -->
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Grid.Column="0"
+                                   Text="Low"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="High"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="End"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Air Conditioner -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="AirConditionerCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -283,16 +392,22 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="AirConditionerIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.37.49-.1 1.1.5 1.1h14.6c.6 0 .87-.61.5-1.1z"
-                                  Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="AirConditionerIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="AirConditionerIconPath"
+                                  Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.37.49-.1 1.1.5 1.1h14.6c.6 0 .87-.61.5-1.1z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -308,15 +423,88 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="AirConditionerSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnAirConditionerSwitchToggled"/>
                     </Grid>
                 </Border>
 
+                <!-- Air Conditioner Expanded Section (Temperature Control) -->
+                <Border x:Name="AirConditionerExpandedSection"
+                        IsVisible="False"
+                        StrokeThickness="0"
+                        Padding="20,20"
+                        Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,2"
+                                Radius="8"
+                                Opacity="0.1"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#E0E0E0, Dark=#404040}"
+                                 Margin="0,0,0,10"/>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M15 13V5c0-1.66-1.34-3-3-3S9 3.34 9 5v8c-1.21.91-2 2.37-2 4 0 2.76 2.24 5 5 5s5-2.24 5-5c0-1.63-.79-3.09-2-4zm-4-8c0-.55.45-1 1-1s1 .45 1 1h-1v1h1v2h-1v1h1v2h-2V5z"
+                                      Fill="{AppThemeBinding Light=#333333, Dark=#CCCCCC}"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Temperature"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="2"
+                                   x:Name="AirConditionerTempValueLabel"
+                                   Text="22°C"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#512BD4"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                        <Slider x:Name="AirConditionerTempSlider"
+                                Minimum="16"
+                                Maximum="30"
+                                Value="22"
+                                MinimumTrackColor="#212121"
+                                MaximumTrackColor="#512BD4"
+                                ThumbColor="White"
+                                ValueChanged="OnAirConditionerTempChanged"
+                                HeightRequest="40"/>
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Grid.Column="0"
+                                   Text="16°C"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="30°C"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="End"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Smart TV -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="SmartTVCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -327,16 +515,22 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="SmartTVIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"
-                                  Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="SmartTVIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="SmartTVIconPath"
+                                  Data="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -352,15 +546,19 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="SmartTVSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnSmartTVSwitchToggled"/>
                     </Grid>
                 </Border>
 
                 <!-- RGB Lights -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="RGBLightsCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -371,16 +569,22 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="RGBLightsIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"
-                                  Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="RGBLightsIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="RGBLightsIconPath"
+                                  Data="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -396,15 +600,108 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="RGBLightsSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnRGBLightsSwitchToggled"/>
                     </Grid>
                 </Border>
 
+                <!-- RGB Lights Expanded Section (Brightness & Color Control) -->
+                <Border x:Name="RGBLightsExpandedSection"
+                        IsVisible="False"
+                        StrokeThickness="0"
+                        Padding="20,20"
+                        Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,2"
+                                Radius="8"
+                                Opacity="0.1"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#E0E0E0, Dark=#404040}"
+                                 Margin="0,0,0,10"/>
+                        <!-- Brightness Control -->
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M7 2v2h1v14H7v2h10v-2h-1V4h1V2H7zm2 2h6v12H9V4z"
+                                      Fill="#FF9800"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Brightness"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="2"
+                                   x:Name="RGBLightsBrightnessValueLabel"
+                                   Text="80%"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF9800"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                        <Slider x:Name="RGBLightsBrightnessSlider"
+                                Minimum="0"
+                                Maximum="100"
+                                Value="80"
+                                MinimumTrackColor="#212121"
+                                MaximumTrackColor="#FF9800"
+                                ThumbColor="White"
+                                ValueChanged="OnRGBLightsBrightnessChanged"
+                                HeightRequest="40"/>
+                        <!-- Color Control -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-1.8-1.59-2.86-3.87-2.86-6.49 0-3.31 2.69-6 6-6s6 2.69 6 6c0 2.62-1.06 4.9-2.86 6.49-.24.27-.39.62-.39 1.01 0 .83.67 1.5 1.5 1.5H21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"
+                                      Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Color"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border Grid.Column="2"
+                                    BackgroundColor="#2196F3"
+                                    WidthRequest="30"
+                                    HeightRequest="30"
+                                    StrokeThickness="2"
+                                    Stroke="White"
+                                    Margin="10,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6"/>
+                                </Border.StrokeShape>
+                            </Border>
+                            <BoxView Grid.Column="3"
+                                     BackgroundColor="#2196F3"
+                                     WidthRequest="100"
+                                     HeightRequest="30"
+                                     Margin="5,0,0,0"
+                                     CornerRadius="15"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Table Fan -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="TableFanCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -415,16 +712,22 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="TableFanIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M12.01 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3h-13c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12.01 6m0-2C9.12 4 6.6 5.64 5.35 8.04 2.35 8.36.01 10.91.01 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96C18.68 6.59 15.65 4 12.01 4z"
-                                  Fill="White"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="TableFanIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="TableFanIconPath"
+                                  Data="M12.01 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3h-13c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12.01 6m0-2C9.12 4 6.6 5.64 5.35 8.04 2.35 8.36.01 10.91.01 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96C18.68 6.59 15.65 4 12.01 4z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -440,15 +743,88 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="TableFanSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnTableFanSwitchToggled"/>
                     </Grid>
                 </Border>
 
+                <!-- Table Fan Expanded Section (Speed Control) -->
+                <Border x:Name="TableFanExpandedSection"
+                        IsVisible="False"
+                        StrokeThickness="0"
+                        Padding="20,20"
+                        Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,2"
+                                Radius="8"
+                                Opacity="0.1"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#E0E0E0, Dark=#404040}"
+                                 Margin="0,0,0,10"/>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M4 9h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0h2v2h-2zm-2-4h2v2h-2zm4 0h2v2h-2z"
+                                      Fill="{AppThemeBinding Light=#333333, Dark=#CCCCCC}"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Speed"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="2"
+                                   x:Name="TableFanSpeedValueLabel"
+                                   Text="2"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#2196F3"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                        <Slider x:Name="TableFanSpeedSlider"
+                                Minimum="1"
+                                Maximum="5"
+                                Value="2"
+                                MinimumTrackColor="#2196F3"
+                                MaximumTrackColor="{AppThemeBinding Light=#212121, Dark=#404040}"
+                                ThumbColor="White"
+                                ValueChanged="OnTableFanSpeedChanged"
+                                HeightRequest="40"/>
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Grid.Column="0"
+                                   Text="Low"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="High"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="End"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Pendant Lights -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="PendantLightsCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -459,16 +835,22 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="PendantLightsIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"
-                                  Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="PendantLightsIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="PendantLightsIconPath"
+                                  Data="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -484,15 +866,108 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="PendantLightsSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnPendantLightsSwitchToggled"/>
                     </Grid>
                 </Border>
 
+                <!-- Pendant Lights Expanded Section (Brightness & Color Control) -->
+                <Border x:Name="PendantLightsExpandedSection"
+                        IsVisible="False"
+                        StrokeThickness="0"
+                        Padding="20,20"
+                        Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,2"
+                                Radius="8"
+                                Opacity="0.1"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#E0E0E0, Dark=#404040}"
+                                 Margin="0,0,0,10"/>
+                        <!-- Brightness Control -->
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M7 2v2h1v14H7v2h10v-2h-1V4h1V2H7zm2 2h6v12H9V4z"
+                                      Fill="#FF9800"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Brightness"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="2"
+                                   x:Name="PendantLightsBrightnessValueLabel"
+                                   Text="80%"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF9800"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                        <Slider x:Name="PendantLightsBrightnessSlider"
+                                Minimum="0"
+                                Maximum="100"
+                                Value="80"
+                                MinimumTrackColor="#212121"
+                                MaximumTrackColor="#FF9800"
+                                ThumbColor="White"
+                                ValueChanged="OnPendantLightsBrightnessChanged"
+                                HeightRequest="40"/>
+                        <!-- Color Control -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-1.8-1.59-2.86-3.87-2.86-6.49 0-3.31 2.69-6 6-6s6 2.69 6 6c0 2.62-1.06 4.9-2.86 6.49-.24.27-.39.62-.39 1.01 0 .83.67 1.5 1.5 1.5H21c4.97 0 9-4.03 9-9s-4.03-9-9-9z"
+                                      Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Color"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Border Grid.Column="2"
+                                    BackgroundColor="#2196F3"
+                                    WidthRequest="30"
+                                    HeightRequest="30"
+                                    StrokeThickness="2"
+                                    Stroke="White"
+                                    Margin="10,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6"/>
+                                </Border.StrokeShape>
+                            </Border>
+                            <BoxView Grid.Column="3"
+                                     BackgroundColor="#2196F3"
+                                     WidthRequest="100"
+                                     HeightRequest="30"
+                                     Margin="5,0,0,0"
+                                     CornerRadius="15"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
                 <!-- Split AC -->
-                <Border StrokeThickness="0" Padding="20,15">
+                <Border x:Name="SplitACCard"
+                        StrokeThickness="0" 
+                        Padding="20,15">
                     <Border.StrokeShape>
                         <RoundRectangle CornerRadius="15"/>
                     </Border.StrokeShape>
@@ -503,16 +978,22 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
-                        <Border Grid.Column="0"
-                                BackgroundColor="#F0F0F0"
+                        <Border x:Name="SplitACIconBorder"
                                 WidthRequest="50"
                                 HeightRequest="50"
                                 StrokeThickness="0">
                             <Border.StrokeShape>
                                 <RoundRectangle CornerRadius="12"/>
                             </Border.StrokeShape>
-                            <Path Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.37.49-.1 1.1.5 1.1h14.6c.6 0 .87-.61.5-1.1z"
-                                  Fill="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"
+                            <Border.Background>
+                                <LinearGradientBrush x:Name="SplitACIconGradient" StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#F0F0F0" Offset="0"/>
+                                    <GradientStop Color="#F0F0F0" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Path x:Name="SplitACIconPath"
+                                  Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.37.49-.1 1.1.5 1.1h14.6c.6 0 .87-.61.5-1.1z"
+                                  Fill="#666666"
                                   WidthRequest="24"
                                   HeightRequest="24"
                                   HorizontalOptions="Center"
@@ -528,11 +1009,82 @@
                                    TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
                         </VerticalStackLayout>
                         <Switch Grid.Column="2"
+                                x:Name="SplitACSwitch"
                                 IsToggled="False"
                                 OnColor="#512BD4"
                                 ThumbColor="White"
-                                VerticalOptions="Center"/>
+                                VerticalOptions="Center"
+                                Toggled="OnSplitACSwitchToggled"/>
                     </Grid>
+                </Border>
+
+                <!-- Split AC Expanded Section (Temperature Control) -->
+                <Border x:Name="SplitACExpandedSection"
+                        IsVisible="False"
+                        StrokeThickness="0"
+                        Padding="20,20"
+                        Margin="0,5,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15"/>
+                    </Border.StrokeShape>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#F5F5F5" Offset="0"/>
+                            <GradientStop Color="#E8E8E8" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="0,2"
+                                Radius="8"
+                                Opacity="0.1"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#E0E0E0, Dark=#404040}"
+                                 Margin="0,0,0,10"/>
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <HorizontalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Path Data="M15 13V5c0-1.66-1.34-3-3-3S9 3.34 9 5v8c-1.21.91-2 2.37-2 4 0 2.76 2.24 5 5 5s5-2.24 5-5c0-1.63-.79-3.09-2-4zm-4-8c0-.55.45-1 1-1s1 .45 1 1h-1v1h1v2h-1v1h1v2h-2V5z"
+                                      Fill="{AppThemeBinding Light=#333333, Dark=#CCCCCC}"
+                                      WidthRequest="20"
+                                      HeightRequest="20"/>
+                                <Label Text="Temperature"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"
+                                       VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="2"
+                                   x:Name="SplitACTempValueLabel"
+                                   Text="22°C"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   TextColor="#512BD4"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                        <Slider x:Name="SplitACTempSlider"
+                                Minimum="16"
+                                Maximum="30"
+                                Value="22"
+                                MinimumTrackColor="#212121"
+                                MaximumTrackColor="#512BD4"
+                                ThumbColor="White"
+                                ValueChanged="OnSplitACTempChanged"
+                                HeightRequest="40"/>
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Grid.Column="0"
+                                   Text="16°C"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="Start"/>
+                            <Label Grid.Column="1"
+                                   Text="30°C"
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#999999, Dark=#666666}"
+                                   HorizontalOptions="End"/>
+                        </Grid>
+                    </VerticalStackLayout>
                 </Border>
 
                 <!-- TV -->
@@ -578,6 +1130,326 @@
                                 VerticalOptions="Center"/>
                     </Grid>
                 </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <!-- Smart Controls Section -->
+            <VerticalStackLayout x:Name="SmartControlsSection" 
+                                IsVisible="False" 
+                                Spacing="0">
+                <!-- Section Title -->
+                <VerticalStackLayout Spacing="5" Margin="0,10">
+                    <Label Text="Smart Controls"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+                    <Label Text="Balanced interface with intelligent features"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray400}}"/>
+                </VerticalStackLayout>
+
+                <!-- Device Control Cards (Same as Compact but different order) -->
+                <VerticalStackLayout Spacing="15">
+                    <!-- RGB Lights -->
+                    <Border x:Name="SmartRGBLightsCard"
+                            StrokeThickness="0" 
+                            Padding="20,15">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#F5F5F5" Offset="0"/>
+                                <GradientStop Color="#E8E8E8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="0,2"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border x:Name="SmartRGBLightsIconBorder"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#F0F0F0" Offset="0"/>
+                                        <GradientStop Color="#F0F0F0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Path x:Name="SmartRGBLightsIconPath"
+                                      Data="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"
+                                      Fill="#666666"
+                                      WidthRequest="24"
+                                      HeightRequest="24"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="RGB Lights"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Kitchen"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    x:Name="SmartRGBLightsSwitch"
+                                    IsToggled="False"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"
+                                    Toggled="OnSmartRGBLightsSwitchToggled"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Table Fan -->
+                    <Border x:Name="SmartTableFanCard"
+                            StrokeThickness="0" 
+                            Padding="20,15">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#F5F5F5" Offset="0"/>
+                                <GradientStop Color="#E8E8E8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="0,2"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border x:Name="SmartTableFanIconBorder"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#F0F0F0" Offset="0"/>
+                                        <GradientStop Color="#F0F0F0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Path x:Name="SmartTableFanIconPath"
+                                      Data="M12.01 6c2.61 0 4.89 1.86 5.4 4.43l.3 1.5 1.52.11c1.56.11 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3h-13c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.95 6 12.01 6m0-2C9.12 4 6.6 5.64 5.35 8.04 2.35 8.36.01 10.91.01 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.64-4.96C18.68 6.59 15.65 4 12.01 4z"
+                                      Fill="#666666"
+                                      WidthRequest="24"
+                                      HeightRequest="24"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="Table Fan"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Study Room"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    x:Name="SmartTableFanSwitch"
+                                    IsToggled="False"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"
+                                    Toggled="OnSmartTableFanSwitchToggled"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Pendant Lights -->
+                    <Border x:Name="SmartPendantLightsCard"
+                            StrokeThickness="0" 
+                            Padding="20,15">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#F5F5F5" Offset="0"/>
+                                <GradientStop Color="#E8E8E8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="0,2"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border x:Name="SmartPendantLightsIconBorder"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#F0F0F0" Offset="0"/>
+                                        <GradientStop Color="#F0F0F0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Path x:Name="SmartPendantLightsIconPath"
+                                      Data="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7z"
+                                      Fill="#666666"
+                                      WidthRequest="24"
+                                      HeightRequest="24"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="Pendant Lights"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Dining Room"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    x:Name="SmartPendantLightsSwitch"
+                                    IsToggled="False"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"
+                                    Toggled="OnSmartPendantLightsSwitchToggled"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Split AC -->
+                    <Border x:Name="SmartSplitACCard"
+                            StrokeThickness="0" 
+                            Padding="20,15">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#F5F5F5" Offset="0"/>
+                                <GradientStop Color="#E8E8E8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="0,2"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border x:Name="SmartSplitACIconBorder"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#F0F0F0" Offset="0"/>
+                                        <GradientStop Color="#F0F0F0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Path x:Name="SmartSplitACIconPath"
+                                      Data="M19.8 18.4L14 10.67V6.5l1.35-1.69c.26-.33.03-.81-.39-.81H9.04c-.42 0-.65.48-.39.81L10 6.5v4.17L4.2 18.4c-.37.49-.1 1.1.5 1.1h14.6c.6 0 .87-.61.5-1.1z"
+                                      Fill="#666666"
+                                      WidthRequest="24"
+                                      HeightRequest="24"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="Split AC"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Master Bedroom"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    x:Name="SmartSplitACSwitch"
+                                    IsToggled="False"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"
+                                    Toggled="OnSmartSplitACSwitchToggled"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- TV -->
+                    <Border x:Name="SmartControlsTVCard"
+                            StrokeThickness="0" 
+                            Padding="20,15">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="15"/>
+                        </Border.StrokeShape>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#F5F5F5" Offset="0"/>
+                                <GradientStop Color="#E8E8E8" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Shadow>
+                            <Shadow Brush="Black"
+                                    Offset="0,2"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Border x:Name="SmartTVIconBorder2"
+                                    WidthRequest="50"
+                                    HeightRequest="50"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Color="#F0F0F0" Offset="0"/>
+                                        <GradientStop Color="#F0F0F0" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Path x:Name="SmartTVIconPath2"
+                                      Data="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"
+                                      Fill="#666666"
+                                      WidthRequest="24"
+                                      HeightRequest="24"
+                                      HorizontalOptions="Center"
+                                      VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                <Label Text="TV"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#333333, Dark=White}"/>
+                                <Label Text="Bedroom"
+                                       FontSize="14"
+                                       TextColor="{AppThemeBinding Light=#666666, Dark=#CCCCCC}"/>
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="2"
+                                    x:Name="SmartTVSwitch2"
+                                    IsToggled="False"
+                                    OnColor="#512BD4"
+                                    ThumbColor="White"
+                                    VerticalOptions="Center"
+                                    Toggled="OnSmartTVSwitchToggled2"/>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
             </VerticalStackLayout>
 
             <!-- Statistics Cards Section -->
